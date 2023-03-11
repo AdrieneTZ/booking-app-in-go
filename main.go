@@ -11,6 +11,9 @@ func main() {
 	fmt.Printf("We have total of %v tickets, and %v are still aviliable.\n", conferenceTickets, remainingTickets)
 	fmt.Println("Get your tickets here to attend.")
 
+	// declare variables
+	var bookings [50]string
+
 	var firstName string
 	var lastName string
 	var email string
@@ -30,6 +33,7 @@ func main() {
 	fmt.Scan(&userTickets)
 
 	remainingTickets = remainingTickets - userTickets
+	bookings[0] = firstName + " " + lastName
 
 	fmt.Printf("Thank you %v %v for booking %v tickets. You will recieve a confirmation email at %v.\n", firstName, lastName, userTickets, email)
 	fmt.Printf("%v tickets are remaining for %v.\n", remainingTickets, conferenceTickets)
