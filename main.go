@@ -35,28 +35,39 @@ func main() {
 		fmt.Println("Enter number of tickets: ")
 		fmt.Scan(&userTickets)
 
-		remainingTickets = remainingTickets - userTickets
-		bookings = append(bookings, firstName+" "+lastName+",")
+		if userTickets <= remainingTickets {
+			remainingTickets = remainingTickets - userTickets
+			bookings = append(bookings, firstName+" "+lastName+",")
 
-		fmt.Printf("Thank you %v %v for booking %v tickets. You will recieve a confirmation email at %v.\n", firstName, lastName, userTickets, email)
-		fmt.Printf("%v tickets are remaining for %v.\n", remainingTickets, conferenceTickets)
+			fmt.Printf("Thank you %v %v for booking %v tickets. You will recieve a confirmation email at %v.\n", firstName, lastName, userTickets, email)
+			fmt.Printf("%v tickets are remaining for %v.\n", remainingTickets, conferenceTickets)
 
-		firstNames := []string{} // empty slice
-		// "range" allows us to iterate over elements for different data structure
-		// not only arrays and slices
-		// for arrays and slices, "range" provides the index and value for each element
-		// for <index>, <item> := range <arrays or slices> {logic}
-		// "_": to ignore the variable that's not be used
-		// unused variables need to be explicted in Go
-		for _, booking := range bookings {
-			// "strings.Fields": splits the string with white space as separator
-			// and returns a slice with the split elements
-			// "Tom Liz" => ["Tom","Liz"]
-			var names = strings.Fields(booking)
-			var firstName = names[0]
-			firstNames = append(firstNames, firstName)
+			firstNames := []string{} // empty slice
+			// "range" allows us to iterate over elements for different data structure
+			// not only arrays and slices
+			// for arrays and slices, "range" provides the index and value for each element
+			// for <index>, <item> := range <arrays or slices> {logic}
+			// "_": to ignore the variable that's not be used
+			// unused variables need to be explicted in Go
+			for _, booking := range bookings {
+				// "strings.Fields": splits the string with white space as separator
+				// and returns a slice with the split elements
+				// "Tom Liz" => ["Tom","Liz"]
+				var names = strings.Fields(booking)
+				var firstName = names[0]
+				firstNames = append(firstNames, firstName)
+			}
+			fmt.Printf("The first names of bookings are: %v.\n", firstNames)
+
+			if remainingTickets == 0 {
+				// end the program
+				fmt.Println("Our conference is booked out. Come back next year.")
+				break
+			}
+
+		} else {
+			fmt.Printf("We only have %v tickets remaining, so you can't book %v tickets.\n", remainingTickets, userTickets)
 		}
 
-		fmt.Printf("The first names of bookings are: %v.\n", firstNames)
 	}
 }
