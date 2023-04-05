@@ -6,24 +6,26 @@ import (
 	"strings"
 )
 
-func main() {
-	var conferenceName string = "Go conference"
-	const conferenceTickets uint = 50
-	var remainingTickets uint = 50
-	var bookings []string // Slice
+const conferenceTickets uint = 50
 
-	greetUsers(conferenceName, conferenceTickets, remainingTickets)
+var conferenceName string = "Go conference"
+var remainingTickets uint = 50
+var bookings []string // Slice
+
+func main() {
+
+	greetUsers()
 
 	for {
 
 		firstName, lastName, email, userTickets := getUserInput()
-		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets, remainingTickets)
+		isValidName, isValidEmail, isValidTicketNumber := validateUserInput(firstName, lastName, email, userTickets)
 
 		if isValidName && isValidEmail && isValidTicketNumber {
 
-			bookTicket(remainingTickets, userTickets, bookings, firstName, lastName, email, conferenceName)
+			bookTicket(userTickets, firstName, lastName, email)
 
-			firstNames := getFirstName(bookings)
+			firstNames := getFirstName()
 			fmt.Printf("The first names of bookings are: %v.\n", firstNames)
 
 			if remainingTickets == 0 {
@@ -47,13 +49,13 @@ func main() {
 	}
 }
 
-func greetUsers(conferenceName string, conferenceTickets uint, remainingTickets uint) {
+func greetUsers() {
 	fmt.Printf("Welcome to %v booking application.\n", conferenceName)
 	fmt.Printf("We have total of %v tickets, and %v are still aviliable.\n", conferenceTickets, remainingTickets)
 	fmt.Println("Get your tickets here to attend.")
 }
 
-func getFirstName(bookings []string) []string {
+func getFirstName() []string {
 	firstNames := []string{} // empty slice
 	// "range" allows us to iterate over elements for different data structure
 	// not only arrays and slices
@@ -73,7 +75,7 @@ func getFirstName(bookings []string) []string {
 	return firstNames
 }
 
-func validateUserInput(firstName string, lastName string, email string, userTickets uint, remainingTickets uint) (bool, bool, bool) {
+func validateUserInput(firstName string, lastName string, email string, userTickets uint) (bool, bool, bool) {
 	// validate user input
 	isValidName := len(firstName) >= 2 && len(lastName) >= 2
 	// email should contain @ sign
@@ -106,7 +108,7 @@ func getUserInput() (string, string, string, uint) {
 	return firstName, lastName, email, userTickets
 }
 
-func bookTicket(remainingTickets uint, userTickets uint, bookings []string, firstName string, lastName string, email string, conferenceName string) {
+func bookTicket(userTickets uint, firstName string, lastName string, email string) {
 	remainingTickets = remainingTickets - userTickets
 	bookings = append(bookings, firstName+" "+lastName+",")
 
