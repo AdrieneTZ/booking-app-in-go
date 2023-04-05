@@ -12,9 +12,7 @@ func main() {
 	var remainingTickets uint = 50
 	var bookings []string // Slice
 
-	fmt.Printf("Welcome to %v booking application.\n", conferenceName)
-	fmt.Printf("We have total of %v tickets, and %v are still aviliable.\n", conferenceTickets, remainingTickets)
-	fmt.Println("Get your tickets here to attend.")
+	greetUsers(conferenceName, conferenceTickets, remainingTickets)
 
 	for {
 		var firstName string
@@ -49,22 +47,7 @@ func main() {
 			fmt.Printf("Thank you %v %v for booking %v tickets. You will recieve a confirmation email at %v.\n", firstName, lastName, userTickets, email)
 			fmt.Printf("%v tickets are remaining for %v.\n", remainingTickets, conferenceTickets)
 
-			firstNames := []string{} // empty slice
-			// "range" allows us to iterate over elements for different data structure
-			// not only arrays and slices
-			// for arrays and slices, "range" provides the index and value for each element
-			// for <index>, <item> := range <arrays or slices> {logic}
-			// "_": to ignore the variable that's not be used
-			// unused variables need to be explicted in Go
-			for _, booking := range bookings {
-				// "strings.Fields": splits the string with white space as separator
-				// and returns a slice with the split elements
-				// "Tom Liz" => ["Tom","Liz"]
-				var names = strings.Fields(booking)
-				var firstName = names[0]
-				firstNames = append(firstNames, firstName)
-			}
-			fmt.Printf("The first names of bookings are: %v.\n", firstNames)
+			printFirstName(bookings)
 
 			if remainingTickets == 0 {
 				// end the program
@@ -85,4 +68,29 @@ func main() {
 		}
 
 	}
+}
+
+func greetUsers(conferenceName string, conferenceTickets uint, remainingTickets uint) {
+	fmt.Printf("Welcome to %v booking application.\n", conferenceName)
+	fmt.Printf("We have total of %v tickets, and %v are still aviliable.\n", conferenceTickets, remainingTickets)
+	fmt.Println("Get your tickets here to attend.")
+}
+
+func printFirstName(bookings []string) {
+	firstNames := []string{} // empty slice
+	// "range" allows us to iterate over elements for different data structure
+	// not only arrays and slices
+	// for arrays and slices, "range" provides the index and value for each element
+	// for <index>, <item> := range <arrays or slices> {logic}
+	// "_": to ignore the variable that's not be used
+	// unused variables need to be explicted in Go
+	for _, booking := range bookings {
+		// "strings.Fields": splits the string with white space as separator
+		// and returns a slice with the split elements
+		// "Tom Liz" => ["Tom","Liz"]
+		var names = strings.Fields(booking)
+		var firstName = names[0]
+		firstNames = append(firstNames, firstName)
+	}
+	fmt.Printf("The first names of bookings are: %v.\n", firstNames)
 }
